@@ -5,6 +5,7 @@ import numpy
 def example(x):
     print("hello")
 
+
 cap = cv2.VideoCapture(0)
 bars = cv2.namedWindow("bars")
 
@@ -25,12 +26,12 @@ while (True):
     if (ret):
         break
 
-# Start capturing the frames for actual magic!!
+# Start capturing the frames for actual object!!
 while (True):
     ret, frame = cap.read()
     inspect = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-    # getting the HSV values for masking the cloak
+    # getting the HSV values for masking the pen cap
     upper_hue = cv2.getTrackbarPos("upper_hue", "bars")
     upper_saturation = cv2.getTrackbarPos("upper_saturation", "bars")
     upper_value = cv2.getTrackbarPos("upper_value", "bars")
@@ -40,7 +41,6 @@ while (True):
 
     # Kernel to be used for dilation
     kernel = numpy.ones((3, 3), numpy.uint8)
-
 
     upper_hsv = numpy.array([upper_hue, upper_saturation, upper_value])
     lower_hsv = numpy.array([lower_hue, lower_saturation, lower_value])
@@ -70,7 +70,8 @@ while (True):
 
     final = cv2.bitwise_or(object_area, Invisible_area)
 
-    cv2.imshow("invisible pen",final)
+    cv2.imshow("Original image", frame)
+    cv2.imshow("invisible pen", final)
 
     if (cv2.waitKey(3) == ord('q')):
         break
